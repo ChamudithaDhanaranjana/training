@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 "this is from master" 
 =======
 "this is from my-branch" 
 >>>>>>> my-branch
+=======
+"this is from my-branch and master" 
+>>>>>>> 43bb17b7ba3cb1a0c49427831b0f0fd29b4c1d99
