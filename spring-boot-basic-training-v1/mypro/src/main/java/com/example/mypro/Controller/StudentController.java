@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/student")
 public class StudentController {
     private final StudentService studentService;
 
@@ -19,12 +18,12 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping
+    @GetMapping("/show")
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("view/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
         Student student = studentService.getStudentById(id);
         if (student != null) {
@@ -34,14 +33,19 @@ public class StudentController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudentById(@PathVariable Long id) {
-        studentService.deleteStudentById(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/delete/{id}") // Define the endpoint mapping with a path variable
+    public ResponseEntity<String> deleteStudentById(@PathVariable Long id) {
+        boolean deleted = studentService.deleteStudentById(id);
+
+        if (deleted) {
+            return ResponseEntity.ok("Student deleted successfully"); // Return 200 OK with a success message
+        } else {
+            return ResponseEntity.notFound().build(); // Return 404 Not Found if student not found
+        }
     }
 }
